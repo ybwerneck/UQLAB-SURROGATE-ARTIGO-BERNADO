@@ -44,8 +44,8 @@ disp(seldegs)
 fprintf(" \n");
 fprintf("Corr Coefs \n");
 disp(corrcoefs)
-fprintf("Avarage \n")
-disp(avgcoefs);
+fprintf("Avarage: %f \n")
+(avgcoefs);
 fprintf(" \n");
 fprintf("Min Erros \n");
 disp(minEs)
