@@ -1,19 +1,18 @@
-function [avgcoef,seldeg,corrcoefs,maxE,minE,meanE] = train_validate(Nt,print)
 %Define input and ouput labels for printing 
-
+qoiLabels = {'ADP90', 'ADP50', 'dVmax', 'Vrest'};
 
 %Load Test and Validation Data
 
+Nt=1500;
+Nv=1000;
 
-Nv=1000; %%using entire validation set
+TrainSet=readmatrix("trainData.txt");
 
-TrainSet=readmatrix("trainData.txt"); %%reading the file every iteration is bad, need to improve
-
-Xtrain=TrainSet(1:Nt,1:8); %%per the article, taking the first Nt training samples
+Xtrain=TrainSet(1:Nt,1:8);
 Ytrain=TrainSet(1:Nt,9:14);
 
 
-ValSet=readmatrix("testData.txt"); 
+ValSet=readmatrix("testData.txt");
 
 Xval=ValSet(1:Nv,1:8);
 Yval=ValSet(1:Nv,9:14);
@@ -24,7 +23,7 @@ Yval=ValSet(1:Nv,9:14);
 %Define model using uqlab
 
 
-nP=8;
+nP=8
 
  
 vals=[150.0 6.0 116.85 11.83425 372.0 5.16 410.0 11.3]; %%baseline values from article
@@ -50,14 +49,12 @@ MetaOpts.ValidationSet.Y = Yval;
 
 
 %%Calculate PCE coeficients, we'll perform the adpative experiment,
-%%exploring basis of degrees in the given range, once for each qoi
+%%exploring basis of 2:6 degrees, once for each qoi
 
 myPCE = uq_createModel(MetaOpts);
 
 %%Sample validation data with emulator
 YPCE = uq_evalModel(myPCE,Xval);
-
-
 %%Calculate validtion metrics
 dif=abs(YPCE-Yval);
 meanE=mean((dif));
@@ -71,10 +68,6 @@ for ii =1:6
 end
 avgcoef=mean(corrcoefs);
 
-
-
-%%print results
-if print
 fprintf("Fitting and validation completed! \n");
 fprintf("Selected degrees \n");
 disp(seldeg)
@@ -92,4 +85,3 @@ fprintf(" \n");
 fprintf("Mean \n");
 disp(meanE)
 fprintf(" \n");
-end
