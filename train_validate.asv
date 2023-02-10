@@ -36,8 +36,8 @@ myInput = uq_createInput(InputOpts);
 %%OLS ordinary least square method
 MetaOpts.Type = 'Metamodel';
 MetaOpts.MetaType = 'PCE';
-MetaOpts.Method = 'LARS';
-MetaOpts.Degree = 2:4;
+MetaOpts.Method = 'OMP';
+MetaOpts.Degree = 2:3;
 MetaOpts.ExpDesign.X = Xtrain;
 MetaOpts.ExpDesign.Y = Ytrain;
 MetaOpts.ValidationSet.X = Xval;
